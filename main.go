@@ -1,7 +1,8 @@
 package main
 
-import "fmt"
+import "chatroom/Routes"
 
 func main() {
-	fmt.Println("Hello chatroom")
+	r := Routes.SetupRouter()
+	r.Run()
 }
