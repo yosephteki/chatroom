@@ -1,12 +1,14 @@
 package Models
 
+import "github.com/google/uuid"
+
 type User struct {
-	Id       string `json:"id"`
-	Name     string `json:"name"`
-	Email    string `json:"email"`
-	Phone    string `json:"phone"`
-	Address  string `json:"address"`
-	Password string `json:"password"`
+	Id       uuid.UUID `gorm:"type:uuid;default:uuid_generate_v4()"`
+	Name     string    `json:"name"`
+	Email    string    `json:"email"`
+	Phone    string    `json:"phone"`
+	Address  string    `json:"address"`
+	Password string    `json:"password"`
 }
 
 func (u *User) TableName() string {
