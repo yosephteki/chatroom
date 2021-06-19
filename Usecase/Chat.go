@@ -5,8 +5,8 @@ import (
 	"chatroom/Repositories"
 )
 
-func GetAllConversationByUser(chat *[]Models.Chat, userid string) (err error) {
-	err = Repositories.GetAllConversationByUser(chat, userid)
+func GetAllConversationByUser(conversation *[]Models.ShowConversation, userid string) (err error) {
+	err = Repositories.GetAllConversationByUser(conversation, userid)
 	if err != nil {
 		return err
 	}

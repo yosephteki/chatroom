@@ -10,10 +10,10 @@ import (
 )
 
 func GetAllChatByUser(c *gin.Context) {
-	var chats []Models.Chat
+	var conversation []Models.ShowConversation
 	userid := c.Params.ByName("id")
 
-	err := Usecase.GetAllConversationByUser(&chats, userid)
+	err := Usecase.GetAllConversationByUser(&conversation, userid)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -21,7 +21,7 @@ func GetAllChatByUser(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, "Conversation not found")
 		c.Abort()
 	} else {
-		c.JSON(http.StatusOK, chats)
+		c.JSON(http.StatusOK, conversation)
 	}
 
 }
