@@ -5,8 +5,9 @@ import (
 	"chatroom/Routes"
 	"log"
 
-	"github.com/jinzhu/gorm"
 	"github.com/joho/godotenv"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 func main() {
@@ -16,13 +17,14 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error load .env file")
 	}
-
-	Config.DB, err = gorm.Open("postgres", Config.DBURL(Config.BuildConfig()))
+	Config.DB, err = gorm.Open(postgres.Open(Config.DBURL(Config.BuildConfig())), &gorm.Config{})
 	if err != nil {
 		log.Println("DB error : ", err)
 	}
 
-	defer Config.DB.Close()
+	sqlDB, err := Config.DB.DB()
+
+	defer sqlDB.Close()
 
 	r := Routes.SetupRouter()
 	r.Run()

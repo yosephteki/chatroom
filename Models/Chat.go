@@ -1,6 +1,8 @@
 package Models
 
-import "github.com/google/uuid"
+import (
+	"github.com/google/uuid"
+)
 
 type Chat struct {
 	Id        uuid.UUID `gorm:"type:uuid;default:uuid_generate_v4()"`
