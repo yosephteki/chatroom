@@ -15,7 +15,7 @@ func SetupRouter() *gin.Engine {
 		grp1.GET("user", func(c *gin.Context) {
 			c.JSON(http.StatusOK, "Hello chatroom")
 		})
-		grp1.GET("Conversation/:id", Controllers.GetAllChatByUser)
+		grp1.GET("Conversation/:id", Controllers.GetAllConversationByUser)
 	}
 
 	return r

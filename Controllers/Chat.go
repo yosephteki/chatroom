@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func GetAllChatByUser(c *gin.Context) {
+func GetAllConversationByUser(c *gin.Context) {
 	var conversation []Models.ShowConversation
 	userid := c.Params.ByName("id")
 
