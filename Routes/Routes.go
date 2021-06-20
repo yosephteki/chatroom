@@ -12,10 +12,11 @@ func SetupRouter() *gin.Engine {
 
 	grp1 := r.Group("api/chat")
 	{
-		grp1.GET("user", func(c *gin.Context) {
+		grp1.GET("welcome", func(c *gin.Context) {
 			c.JSON(http.StatusOK, "Hello chatroom")
 		})
 		grp1.GET("Conversation/:id", Controllers.GetAllConversationByUser)
+		grp1.POST("/:sender/:recipient/:message", Controllers.SendChatToUser)
 	}
 
 	return r

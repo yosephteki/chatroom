@@ -12,3 +12,11 @@ func GetAllConversationByUser(conversation *[]Models.ShowConversation, userid st
 	}
 	return nil
 }
+
+func SendChatToUser(sender string, recipient string, message string) (err error) {
+	err = Repositories.SendChatToUser(sender, recipient, message)
+	if err != nil {
+		return err
+	}
+	return nil
+}
