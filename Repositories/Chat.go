@@ -7,11 +7,18 @@ import (
 
 func GetAllConversationByUser(conversation *[]Models.ShowConversation, userid string) (err error) {
 	err = Config.DB.Raw(
-		`select "user"."name" as "name" , x.sender 
-		from "user" left join ( 
-			select distinct(sender) 
-			from chat c where c.recipient = ?
-			) x on x.sender = "user".id 
+		`select "user"."name" as "name" , x.sender,x.message
+		from "user" 
+		left join ( 
+		select t2.sender,t2.created_at,t1.message 
+		from chat t1
+		inner join(
+		select distinct(c2.sender),max(c2.created_at) as created_at 
+		from chat c2
+		where c2.recipient = ?
+		group by c2.sender
+		) t2 on t1.created_at = t2.created_at and t1.sender = t2.sender
+		) x on x.sender = "user".id 
 		where x.sender is not null`, userid).Scan(&conversation).Error
 	if err != nil {
 		return err
