@@ -28,3 +28,20 @@ func SendChatToUser(sender string, recipient string, message string) (err error)
 	}
 	return nil
 }
+
+func GetConversation(sender string, recipient string, conversation *[]Models.Conversation) (err error) {
+	err = Config.DB.Raw(
+		`select distinct(c.message),u."name",u.id as senderid 
+		from "user" u 
+		join( 
+			select c.sender,c.recipient,c.message 
+			from chat c 
+			where c.recipient = ? and c.sender = ? 
+			or 
+			c.sender = ? and c.recipient = ?
+		) c on c.sender = u.id`, recipient, sender, recipient, sender).Scan(&conversation).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
