@@ -47,7 +47,7 @@ func GetConversation(sender string, recipient string, conversation *[]Models.Con
 			or 
 			c.sender = ? and c.recipient = ?
 		) c on c.sender = u.id
-		order by c.created_at asc`, recipient, sender, recipient, sender).Scan(&conversation).Error
+		order by c.created_at desc`, recipient, sender, recipient, sender).Scan(&conversation).Error
 	if err != nil {
 		return err
 	}
