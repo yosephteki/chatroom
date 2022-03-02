@@ -38,15 +38,16 @@ func SendChatToUser(sender string, recipient string, message string) (err error)
 
 func GetConversation(sender string, recipient string, conversation *[]Models.Conversation) (err error) {
 	err = Config.DB.Raw(
-		`select distinct(c.message),u."name",u.id as senderid 
+		`select distinct(c.message),u."name",u.id as senderid,c.created_at 
 		from "user" u 
 		join( 
-			select c.sender,c.recipient,c.message 
+			select *
 			from chat c 
-			where c.recipient = ? and c.sender = ? 
+			where c.recipient = ? and c.sender = ?
 			or 
 			c.sender = ? and c.recipient = ?
-		) c on c.sender = u.id`, recipient, sender, recipient, sender).Scan(&conversation).Error
+		) c on c.sender = u.id
+		order by c.created_at asc`, recipient, sender, recipient, sender).Scan(&conversation).Error
 	if err != nil {
 		return err
 	}
